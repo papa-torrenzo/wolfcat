@@ -7,7 +7,7 @@ namespace com.torrenzo.Foundation {
     public class CameraManager : ValidatedMonoBehaviour {
         [Header("References")]
         [SerializeField, Anywhere] InputReader input;
-        [SerializeField, Anywhere] CinemachineCamera freeLookCam;
+        [SerializeField, Anywhere] CinemachineCamera boom;
 
         private CinemachineOrbitalFollow orbitalFollow;
 
@@ -18,7 +18,7 @@ namespace com.torrenzo.Foundation {
         bool cameraMovementLock;
 
         void OnEnable() {
-            orbitalFollow = freeLookCam.GetComponent<CinemachineOrbitalFollow>();
+            // orbitalFollow = boom.GetComponent<CinemachineOrbitalFollow>();
             // input.Look += OnLook;
             // input.EnableMouseControlCamera += OnEnableMouseControlCamera;
             // input.DisableMouseControlCamera += OnDisableMouseControlCamera;
