@@ -5,10 +5,11 @@ using UnityEngine;
 namespace com.torrenzo.Foundation {
     public class PlayerController : ValidatedMonoBehaviour {
         [Header("References")]
-        [SerializeField, Self] CharacterController characterController;
         [SerializeField, Self] Animator animator;
-        [SerializeField, Anywhere] CinemachineCamera freeLookCam;
+        [SerializeField, Anywhere] CinemachineCamera boom;
         [SerializeField, Anywhere] InputReader input;
+        [SerializeField, Anywhere] Camera mainCam;
+        Transform mainCamPos;
 
         [Header("Movement Settings")]
         [SerializeField] float moveSpeed = 6f;
@@ -19,22 +20,17 @@ namespace com.torrenzo.Foundation {
         private Vector3 moveToPosition;
         private bool isMoving;
 
-        /*[Header("Jump Settings")]
+        [Header("Jump Settings")]
         [SerializeField] float jumpForce = 10f;
         [SerializeField] float jumpDuration = 0.5f;
         [SerializeField] float jumpCooldown = 0f;
-        [SerializeField] float gravityMultiplier = 3f;*/
-
-
+        [SerializeField] float gravityMultiplier = 3f;
 
         const float ZeroF = 0f;
 
-        Camera mainCam;
-        Transform mainCamPos;
-
         float currentSpeed;
         float velocity;
-        // float jumpVelocity;
+        float jumpVelocity;
         // float dashVelocity = 1f;
 
         Vector3 movement;
@@ -45,12 +41,11 @@ namespace com.torrenzo.Foundation {
 
         void Awake() {
 
-            mainCam = Camera.main;
             mainCamPos = mainCam.transform;
-            freeLookCam.Follow = transform;
-            freeLookCam.LookAt = transform;
+            boom.Follow = transform;
+            boom.LookAt = transform;
             // Invoke event when observed transform is teleported, adjusting freeLookVCam's position accordingly
-            freeLookCam.OnTargetObjectWarped(transform, transform.position - freeLookCam.transform.position - Vector3.forward);
+            boom.OnTargetObjectWarped(transform, transform.position - boom.transform.position - Vector3.forward);
 
         }
 
@@ -67,12 +62,9 @@ namespace com.torrenzo.Foundation {
 
         }
 
-
-
         void OnJump(bool performed) {
            // noop
         }
-
 
         void Update() {
             // movement = new Vector3(input.Direction.x, 0f, input.Direction.y);
@@ -104,7 +96,7 @@ namespace com.torrenzo.Foundation {
             animator.SetFloat(speedId, currentSpeed);
         }
 
-        public void HandleMovement() {
+        /*public void HandleMovement() {
             // Rotate movement direction to match camera rotation
             var adjustedDirection = Quaternion.AngleAxis(mainCamPos.eulerAngles.y, Vector3.up) * movement;
 
@@ -136,7 +128,7 @@ namespace com.torrenzo.Foundation {
 
         void SmoothSpeed(float value) {
             currentSpeed = Mathf.SmoothDamp(currentSpeed, value, ref velocity, smoothTime);
-        }
+        }*/
 
     }
 }
